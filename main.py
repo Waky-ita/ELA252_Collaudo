@@ -1,14 +1,47 @@
 from pymodbus.client import ModbusSerialClient
+import serial.tools.list_ports
 
-# colori per lo stato.
+# I colori per le notifiche
 green = "\033[30;42m"
-red = "\033[0;31m"
+red = "\x1b[30;41m"
 no_color = "\033[0m"
 
+# Ottieni la lista delle porte COM disponibili
+com_ports = [port.device for port in serial.tools.list_ports.comports()]
+
+if not com_ports:
+    print("Nessuna porta COM trovata.")
+else:
+    print("Porte COM disponibili:")
+    for i, port in enumerate(com_ports):
+        print(f"{i + 1}. {port}")
+
+    while True:
+        try:
+            selection = int(input("Seleziona il numero della porta COM desiderata per ELA252: ")) - 1
+            if 0 <= selection < len(com_ports):
+                selected_port_252 = com_ports[selection]
+                break
+            else:
+                print("Selezione non valida. Inserisci un numero valido.")
+        except ValueError:
+            print("Inserisci un numero valido.")
+    while True:
+        try:
+            selection = int(input("Seleziona il numero della porta COM desiderata per scheda relè: ")) - 1
+            if 0 <= selection < len(com_ports):
+                selected_port_rele = com_ports[selection]
+                break
+            else:
+                print("Selezione non valida. Inserisci un numero valido.")
+        except ValueError:
+            print("Inserisci un numero valido.")
+
+# Main
 while True:
     serial_port485_252 = ModbusSerialClient(
         method='rtu',
-        port='COM5',
+        port=selected_port_252,
         stopbits=1,
         bytesize=8,
         parity='N',
@@ -19,7 +52,7 @@ while True:
 
     serial_port485_rele = ModbusSerialClient(
         method='rtu',
-        port='COM7',
+        port=selected_port_rele,
         stopbits=1,
         bytesize=8,
         parity='N',
