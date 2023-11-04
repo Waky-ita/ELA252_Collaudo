@@ -1,6 +1,6 @@
 from pymodbus.client import ModbusSerialClient
 
-# colori per lo stato
+# colori per lo stato.
 green = "\033[30;42m"
 red = "\033[0;31m"
 no_color = "\033[0m"
