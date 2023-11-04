@@ -1,5 +1,9 @@
 from pymodbus.client import ModbusSerialClient
 
+# colori per lo stato
+green = "\033[30;42m"
+red = "\033[0;31m"
+no_color = "\033[0m"
 
 while True:
     serial_port485_252 = ModbusSerialClient(
@@ -42,9 +46,9 @@ while True:
         state_of_input = serial_port485_rele.read_discrete_inputs(0, 8, slave=100)
 
         if state_of_input.bits[0] == True:
-            print("OK")
+            print(f"{green}Collaudo OK")
         else:
-            print("Errore, uscita non funziona.")
+            print(f"{red}Errore, uscita non funziona.")
 
     except Exception as e:
         print(f"Errore: {str(e)}")
@@ -54,4 +58,4 @@ while True:
         serial_port485_rele.close()
 
         # Ripetere ciclo premendo Enter
-    input("Premi Enter per ripetere il ciclo...")
+    input(f"{no_color}Premi Enter per ripetere il ciclo...")
