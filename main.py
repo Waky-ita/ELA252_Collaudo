@@ -76,7 +76,7 @@ while True:
         # print(f"Registro 115 {response_reg115.registers[0]}")
 
         # Scrivi il valore 1 nel registro 400
-        serial_port485_252.write_register(400, 0, slave=1)
+        serial_port485_252.write_register(400, 1, slave=1)
 
         # Aggiungi lo stato del registro 400 nella variabile
         response_reg400 = serial_port485_252.read_holding_registers(400, 1, slave=1)
