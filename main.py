@@ -16,7 +16,7 @@ while True:
 
     if not com_ports:
         print("Nessuna porta COM trovata.")
-        input("Premi 'Invio' per aggiornare la lista delle porte...")
+        input("Premi 'Enter' per aggiornare la lista delle porte...")
     else:
         print("Porte COM disponibili:")
         for i, port in enumerate(com_ports):
@@ -118,4 +118,4 @@ while True:
         serial_port485_relay.close()
 
     # Ripetere ciclo premendo Enter
-    input(f"{no_color}Premi Enter per ripetere il ciclo...")
+    input(f"{no_color}Premi 'Enter'per ripetere il ciclo...")
