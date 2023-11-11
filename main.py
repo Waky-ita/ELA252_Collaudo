@@ -72,6 +72,8 @@ while True:
         # Apri la connessione seriale
         serial_port485_252.connect()
         serial_port485_relay.connect()
+        #TODO import subprocess
+        #p = subprocess.run(['D:/1.bat'])
 
         # Relè OF
         serial_port485_relay.write_coil(1, False, slave=100)
@@ -79,8 +81,6 @@ while True:
         # Verifica se uscita della scheda ELA252 è in corto
         response_of_input_corto_uscita252 = serial_port485_relay.read_discrete_inputs(0, 8, slave=100)
         ErroreCortoUscita252 = response_of_input_corto_uscita252.bits[0] != False
-        if ErroreCortoUscita252:
-            print(f"{red}Corto uscita della scheda ELA252.{no_color}")
         # DEBUG, per vedere entrata scheda relè
         #print(f"Entrata scheda relè {response_of_input_corto_uscita252.bits}")
 
@@ -111,13 +111,15 @@ while True:
         ErroreRegistro400 = response_reg400.registers[0] != 1
         ErroreUscita = response_of_input.bits[0] != True
 
-        if ErroreRegistro115 or ErroreRegistro400 or ErroreUscita:
+        if ErroreRegistro115 or ErroreRegistro400 or ErroreUscita or ErroreCortoUscita252:
             if ErroreRegistro115:
                 print(f"{red}Impossibile scrivere nel registro 115.")
             if ErroreRegistro400:
                 print(f"{red}Impossibile scrivere nel registro 400.")
             if ErroreUscita:
                 print(f"{red}Errore, uscita non funziona.")
+            if ErroreCortoUscita252:
+                print(f"{red}Corto uscita della scheda ELA252.{no_color}")
         else:
             print(f"{green}Collaudo OK.")
 
