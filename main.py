@@ -118,15 +118,15 @@ while True:
 
         if ErroreRegistro115 or ErroreRegistro400 or ErroreUscita or ErroreCortoUscita252:
             if ErroreRegistro115:
-                print(f"{red}Impossibile scrivere nel registro 115.")
+                print(f"{red}Impossibile scrivere nel registro 115.{no_color}")
             if ErroreRegistro400:
-                print(f"{red}Impossibile scrivere nel registro 400.")
+                print(f"{red}Impossibile scrivere nel registro 400.{no_color}")
             if ErroreUscita:
-                print(f"{red}Errore, uscita non funziona.")
+                print(f"{red}Errore, uscita non funziona.{no_color}")
             if ErroreCortoUscita252:
                 print(f"{red}Corto uscita della scheda ELA252.{no_color}")
         else:
-            print(f"{green}Collaudo OK.")
+            print(f"{green}Collaudo OK.{no_color}")
 
     except Exception as e:
         print(f"Errore: {str(e)}")
