@@ -73,6 +73,20 @@ while True:
         serial_port485_252.connect()
         serial_port485_relay.connect()
 
+        # Relè OF
+        serial_port485_relay.write_coil(1, False, slave=100)
+
+        # Verifica se uscita della scheda ELA252 è in corto
+        response_of_input_corto_uscita252 = serial_port485_relay.read_discrete_inputs(0, 8, slave=100)
+        ErroreCortoUscita252 = response_of_input_corto_uscita252.bits[0] != False
+        if ErroreCortoUscita252:
+            print(f"{red}Corto uscita della scheda ELA252.{no_color}")
+        # DEBUG, per vedere entrata scheda relè
+        #print(f"Entrata scheda relè {response_of_input_corto_uscita252.bits}")
+
+        # Relè ON
+        serial_port485_relay.write_coil(1, True, slave=100)
+
         # Scrivi il valore 1 nel registro 115
         serial_port485_252.write_register(115, 1, slave=1)
 
@@ -88,9 +102,6 @@ while True:
         response_reg400 = serial_port485_252.read_holding_registers(400, 1, slave=1)
         # DEBUG, per vedere se è stato scritto correttamente
         # print(f"Registro 400 {response_reg400.registers[0]}")
-
-        # Relè ON
-        serial_port485_relay.write_coil(1, True, slave=100)
 
         # Aggiungi lo stato di ingresso 1 sulla scheda relè nella variablie
         response_of_input = serial_port485_relay.read_discrete_inputs(0, 8, slave=100)
