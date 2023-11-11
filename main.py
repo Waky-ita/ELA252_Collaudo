@@ -1,5 +1,6 @@
 import serial.tools.list_ports
 from pymodbus.client import ModbusSerialClient
+import subprocess
 
 # I colori per le notifiche
 green = "\033[30;42m"
@@ -72,17 +73,20 @@ while True:
         # Apri la connessione seriale
         serial_port485_252.connect()
         serial_port485_relay.connect()
-        #TODO import subprocess
-        #p = subprocess.run(['D:/1.bat'])
 
-        # Relè OF
+        # Apri file .bat per caricare FW, se non esiste - prosegui.
+        try:
+            FlashMagic = subprocess.run(['flash.bat'])
+        except FileNotFoundError:
+            pass
+
+        # Relè OFF
         serial_port485_relay.write_coil(1, False, slave=100)
 
         # Verifica se uscita della scheda ELA252 è in corto
         response_of_input_corto_uscita252 = serial_port485_relay.read_discrete_inputs(0, 8, slave=100)
-        ErroreCortoUscita252 = response_of_input_corto_uscita252.bits[0] != False
         # DEBUG, per vedere entrata scheda relè
-        #print(f"Entrata scheda relè {response_of_input_corto_uscita252.bits}")
+        # print(f"Entrata scheda relè {response_of_input_corto_uscita252.bits}")
 
         # Relè ON
         serial_port485_relay.write_coil(1, True, slave=100)
@@ -107,6 +111,7 @@ while True:
         response_of_input = serial_port485_relay.read_discrete_inputs(0, 8, slave=100)
 
         # Verifica se ci sono stati errori nella scrittura dei registri
+        ErroreCortoUscita252 = response_of_input_corto_uscita252.bits[0] != False
         ErroreRegistro115 = response_reg115.registers[0] != 1
         ErroreRegistro400 = response_reg400.registers[0] != 1
         ErroreUscita = response_of_input.bits[0] != True
