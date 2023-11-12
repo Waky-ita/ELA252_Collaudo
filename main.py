@@ -136,4 +136,4 @@ while True:
         serial_port485_relay.close()
 
     # Ripetere ciclo premendo Enter
-    input(f"{no_color}Premi 'Enter'per ripetere il ciclo...")
+    input(f"{no_color}Premi 'Enter' per ripetere")
