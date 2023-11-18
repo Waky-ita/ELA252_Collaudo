@@ -124,7 +124,7 @@ while True:
             if ErroreUscita:
                 print(f"{red}Errore, uscita non funziona.{no_color}")
             if ErroreCortoUscita252:
-                print(f"{red}Corto uscita della scheda ELA252.{no_color}")
+                print(f"{red}Corto uscita/entrata della scheda ELA252.{no_color}")
         else:
             print(f"{green}Collaudo OK.{no_color}")
 
