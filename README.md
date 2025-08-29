@@ -12,7 +12,7 @@ Il programma ha due modalità di collaudo:
 2. Esegue il collaudo senza caricare FW
 
 
-In alcuni casi su Windows 10 non funzionano i colori su CMD, per attivare bisogna creare un file di registo e lanciarlo
+In alcuni casi su Windows 10 non funzionano i colori su CMD, per attivare bisogna creare un file di registo e lanciarlo:
 
 Windows Registry Editor Version 5.00
 
